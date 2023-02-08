@@ -1,7 +1,25 @@
-// create a function that plays as the computer
-// the function should randomly pick either rock, paper or scissors
-// use function expressions to end up with a cleaner code
-// randomize the choices and assign meaningful values to them
+// ones a button is clicked, calculate the score
+// ones a player reaches 5 points, announce the winner
+let results = document.getElementById("results");
+const rockBtn = document.querySelector("#rock");
+rockBtn.addEventListener("click", () => {
+    playerSelection = "rock";
+    console.log(playRound(playerSelection,computerSelection))
+    console.log(game());  
+}  );
+const paperBtn = document.querySelector("#paper");
+paperBtn.addEventListener("click", () => {
+    playerSelection = "paper";
+    console.log(playRound(playerSelection,computerSelection));
+    console.log(game());   
+});
+const scissorsBtn = document.querySelector("#scissors");
+scissorsBtn.addEventListener("click", () =>{
+    playerSelection = "scissors";
+    console.log(playRound(playerSelection,computerSelection));
+    console.log(game());  
+});
+
 let getComputerChoice = function() {
     let rand = Math.floor(Math.random() * 3);
     if (rand === 0) {
@@ -13,58 +31,83 @@ let getComputerChoice = function() {
     };
 
 }
-// create variables to store answers
+
 let computerSelection = "";
 let playerSelection = "";
-// create variables to store scores
+
 let playerScore = 0;
 let computerScore = 0;
-// create a function that returns the winner
-let playRound = function(playerSelection,computerSelection) {
-    computerSelection = getComputerChoice()
-    console.log(`computer: ${computerSelection}`)
-    computerSelection = computerSelection.toLowerCase()
-    playerSelection= prompt("Enter your choice here: ").toLowerCase()
-    if (playerSelection === "rock" && computerSelection === "paper") {
-        computerScore += 1;
-        return "You lose! Paper beats rock 🤭"
-    } else if (playerSelection === "paper" && computerSelection === "scissors") {
-        computerScore += 1;
-        return "You lose! scissors cuts paper 🧐"
-    } else if (playerSelection === "scissors" && computerSelection === "rock") {
-        computerScore += 1;
-        return "You lose! rock beats scissors 😬"
-    } else if (playerSelection === "rock" && computerSelection === "scissors") {
-        playerScore += 1;
-        return "You won! Rock beats scissors 😄"
-    } else if (playerSelection === "paper" && computerSelection === "rock") {
-        playerScore += 1;
-        return "You won! paper beats rock 😃"
-    } else if (playerSelection === "scissors" && computerSelection === "paper") {
-        playerScore += 1;
-        return "You won! Scissors cuts paper 😃"
-    } else if (playerSelection == computerSelection) {
-        return "Tied, You both chose the same answer!"
-        playerScore += 0;
-        computerScore += 0;
-    } else if (playerSelection != "paper" || "scissors" || "rock") {
-        return "Please choose between rock, paper and scissors."
-        playerScore += 0;
-        computerScore += 0;
-    }    
-}
-// create a function that plays 5 rounds
-// score each round's winner and sum it up
-let game = function() {
-    for (let i = 0; i < 5; i++) {
-        console.log(playRound(playerSelection,computerSelection))
-    };
-    if (playerScore > computerScore) {
-        return "You are the winner 🥳!"
-    } else if (playerScore < computerScore) {
-        return "You Lost 😟!"
-    } else {
-        return "Tied, no one won!"
+
+
+ let playRound = function(playerSelection,computerSelection) {
+     computerSelection = getComputerChoice()
+     console.log(`computer: ${computerSelection}`)
+     computerSelection = computerSelection.toLowerCase()
+     if (playerSelection === "rock" && computerSelection === "paper") {
+         computerScore += 1;
+         results.innerHTML = ` Your score: ${playerScore} ` + 
+         `<br> Opponent's score: ${computerScore} </br>` +
+          "You lose! Paper beats rock 🤭" 
+     } else if (playerSelection === "paper" && computerSelection === "scissors") {
+         computerScore += 1;
+         results.innerHTML = ` Your score: ${playerScore} ` + 
+         `<br> Opponent's score: ${computerScore} </br>` + " You lose! scissors cuts paper 🧐" 
+         
+     } else if (playerSelection === "scissors" && computerSelection === "rock") {
+         computerScore += 1;
+         results.innerHTML = `Your score: ${playerScore}` + 
+         `<br> Opponent's score: ${computerScore} </br>` + " You lose! rock beats scissors 😬" 
+         
+         results.innerHTML + `Your score: ${playerScore}` + 
+         `<br> Opponent's score: ${computerScore} </br>` +  `Your Score: ${playerScore} </br>`;
+         results.innerHTML + `Your score: ${playerScore}` + 
+         `<br> Opponent's score: ${computerScore} </br>` +  `Opponent's Score: ${computerScore} </br>`;
+         
+     } else if (playerSelection === "rock" && computerSelection === "scissors") {
+         playerScore += 1;
+         results.innerHTML = `Your score: ${playerScore}` + 
+         `<br> Opponent's score: ${computerScore} </br>` + " You won! Rock beats scissors 😄" 
+         
+     } else if (playerSelection === "paper" && computerSelection === "rock") {
+         playerScore += 1;
+         results.innerHTML = `Your score: ${playerScore}` + 
+         `<br> Opponent's score: ${computerScore} </br>` + " You won! paper beats rock 😃" 
+         
+     } else if (playerSelection === "scissors" && computerSelection === "paper") {
+         playerScore += 1;
+         results.innerHTML = `Your score: ${playerScore}` + 
+         `<br> Opponent's score: ${computerScore} </br>` + " You won! Scissors cuts paper 😃" 
+          
+     } else if (playerSelection == computerSelection) {
+         
+         results.innerHTML = `Your score: ${playerScore}` + 
+         `<br> Opponent's score: ${computerScore} </br>` + " Tied, You both chose the same answer!" 
+         playerScore += 0;
+         computerScore += 0;
+     } else if (playerSelection != "paper" || "scissors" || "rock") {
+         
+         results.innerHTML = `Your score: ${playerScore}` + 
+         `<br> Opponent's score: ${computerScore} </br>` + " Please choose between rock, paper and scissors." 
+         playerScore += 0;
+         computerScore += 0;
+     }  
+     console.log(playerScore);
+     console.log(computerScore);  
+ }
+
+ let game = function() {
+    
+    if(computerScore >= 5 || playerScore >=5) {
+        if (playerScore > computerScore) {
+            results.textContent = "You are the winner 🥳!"
+        } else if (playerScore < computerScore) {
+            results.textContent = "You Lost the game 😟!"
+        } else {
+            results.textContent = "Tied, no one won the game!"
+            }
     }
-}
-console.log(game())
+    if(computerScore >= 5 || playerScore >=5) {
+        playerScore = 0;
+        computerScore = 0;
+    }
+ };
